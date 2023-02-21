@@ -4,6 +4,7 @@ import random
 #To Do list:
 #Randomize beam spawns
 #Colllsion detection
+#Add more beams
 #Menu screen
 #End screen
 #Ui
@@ -20,13 +21,13 @@ pygame.init()
 
 pygame.display.set_caption('Game Name Here')
 
-WINDOW_SIZE = (1000,1000)
+WINDOW_SIZE = (1400,1000)
 
 screen = pygame.display.set_mode(WINDOW_SIZE,0,32)
 
 
-player_image = pygame.image.load('/Users/garrettsharpe/Documents/Code/Python/Projects/FirstPythonGame/Art/WorkerSprite3.png')
-beam_image = pygame.image.load('/Users/garrettsharpe/Documents/Code/Python/Projects/FirstPythonGame/Art/BeamSprite.png')
+player_image = pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/WorkerSprite3.png')
+beam_image = pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/BeamSprite.png')
 
 moving_right = False
 moving_left = False
@@ -38,15 +39,15 @@ player_y_momentum = 0
 
 player_rect = pygame.Rect(player_location[0], player_location[1], player_image.get_width(),player_image.get_height())
 
-beam1_location = [(random.randint(0,1000)), (random.randint(400,1000))]
+beam1_location = [(random.randint(0,1350)), (random.randint(400,1000))]
 beam1_rect = pygame.Rect(beam1_location[0], beam1_location[1], beam_image.get_width(), beam_image.get_height())
-beam2_location = [(random.randint(0,1000)), (random.randint(400,1000))]
+beam2_location = [(random.randint(0,1350)), (random.randint(400,1000))]
 beam2_rect = pygame.Rect(beam2_location[0], beam2_location[1], beam_image.get_width(), beam_image.get_height())
-beam3_location = [(random.randint(0,1000)), (random.randint(400,1000))]
+beam3_location = [(random.randint(0,1350)), (random.randint(400,1000))]
 beam3_rect = pygame.Rect(beam3_location[0], beam3_location[1], beam_image.get_width(), beam_image.get_height())
-beam4_location = [(random.randint(0,1000)), (random.randint(400,1000))]
+beam4_location = [(random.randint(0,1350)), (random.randint(400,1000))]
 beam4_rect = pygame.Rect(beam4_location[0], beam4_location[1], beam_image.get_width(), beam_image.get_height())
-beam5_location = [(random.randint(0,1000)), (random.randint(400,1000))]
+beam5_location = [(random.randint(0,1350)), (random.randint(400,1000))]
 beam5_rect = pygame.Rect(beam5_location[0], beam5_location[1], beam_image.get_width(), beam_image.get_height())
 
 def collision():
