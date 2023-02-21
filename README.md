@@ -1,4 +1,4 @@
-First Python game created using Pygame
+First Python game created using pygame
 
 Built as a way to practice and develop skills
 
