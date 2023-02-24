@@ -1,5 +1,7 @@
 import pygame, sys
+from pygame.locals import *
 import pygame_menu
+from pygame import mixer
 import random
 
 #To Do list:
@@ -16,14 +18,16 @@ import random
 
 clock = pygame.time.Clock()
 
-from pygame.locals import *
 pygame.init()
+mixer.init()
 
 pygame.display.set_caption('0')
 
 WINDOW_SIZE = (1400,1000)
 
 screen = pygame.display.set_mode(WINDOW_SIZE,0,32)
+
+mixer.music.set_volume(0.2)
 
 def quit_game():
     pygame.quit()
@@ -65,6 +69,9 @@ def get_font(size):
 BG = pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Backgroundimage.png')
 BG_location = [0,0]
 
+leaderboard = {'User1': 1, 'User2': 2, 'User3' : 3, 'User4' :4, 'User5': 5, 'User6': 6, 'User7': 7, 'User8': 8, 'User9': 9, 'User10': 10 }
+user_name = ''
+
 def menu():
     while True:
         screen.blit(BG, BG_location)
@@ -73,17 +80,17 @@ def menu():
 
         PLAYBUTTON_TEXT = get_font(100).render('PLAY', True, '#ff6600')
         PLAYBUTTON_RECT = PLAYBUTTON_TEXT.get_rect(center=(640,300))
-        PLAYBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 250), 
+        PLAYBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 300), 
             text_input="PLAY", font=get_font(75), base_color="#ff6600", hovering_color="White")
 
         LEADERBOARD_TEXT = get_font(100).render('LEADERBOARD', True, '#ff6600')
         LEADERBOARD_RECT = LEADERBOARD_TEXT.get_rect(center=(640,500))
-        LEADERBOARDBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 250), 
+        LEADERBOARDBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 500), 
             text_input="LEADERBOARD", font=get_font(75), base_color="#ff6600", hovering_color="White")
     
         MENUQUIT_TEXT = get_font(100).render('QUIT', True, '#ff6600')
         MENUQUIT_RECT = MENUQUIT_TEXT.get_rect(center=(640,700))
-        MENUQUITBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 250), 
+        MENUQUITBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 700), 
             text_input="QUIT", font=get_font(75), base_color="#ff6600", hovering_color="White")
         
         screen.blit(MENU_TEXT, MENU_RECT)
@@ -193,7 +200,7 @@ def run_game():
         screen.blit(beam_image, beam7_location)
 
         if player_location[1] == 300:
-            if level <= 20:
+            if level < 20:
                 beam1_location[1] -= 10
                 beam2_location[1] -= 10
                 beam3_location[1] -= 10
@@ -201,7 +208,7 @@ def run_game():
                 beam5_location[1] -= 10
                 beam6_location[1] -= 10
                 beam7_location[1] -= 10
-            elif 20 < level <= 50:
+            elif 20 <= level < 50:
                 beam1_location[1] -= 15
                 beam2_location[1] -= 15
                 beam3_location[1] -= 15
@@ -209,7 +216,7 @@ def run_game():
                 beam5_location[1] -= 15
                 beam6_location[1] -= 15
                 beam7_location[1] -= 15
-            elif 50 < level <= 100:
+            elif 50 <+ level < 100:
                 beam1_location[1] -= 20
                 beam2_location[1] -= 20
                 beam3_location[1] -= 20
@@ -217,7 +224,7 @@ def run_game():
                 beam5_location[1] -= 20
                 beam6_location[1] -= 20
                 beam7_location[1] -= 20
-            elif 100 < level <= 200:
+            elif 100 <= level < 200:
                 beam1_location[1] -= 30
                 beam2_location[1] -= 30
                 beam3_location[1] -= 30
@@ -305,6 +312,8 @@ def run_game():
         player_rect.y = player_location[1]
 
         if collision() == True:
+            mixer.music.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Sound Effects/DeathSound.mp3')
+            mixer.music.play()
             break
 
 
@@ -333,17 +342,40 @@ def run_game():
                 if event.key == K_LEFT:
                     moving_left = False 
 
+        if score == 7:
+            level += 1
+            score = 0
+            if level % 10 == 0:
+                mixer.music.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Sound Effects/Level10Sound.mp3')
+                mixer.music.play()
+            else:
+                mixer.music.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Sound Effects/LevelSound.mp3')
+                mixer.music.play()
+            
 
         pygame.display.update()
         clock.tick(60)
 
-        if score == 7:
-            level += 1
-            score = 0
         
-        pygame.display.set_caption(str(level))    
+        pygame.display.set_caption(str(level))
+    leaderboard = update_leaderboard(user_name, level)
+    leaderboard.popitem()
+    return leaderboard
+
 
 def leaderboard_screen():
-    1
+    while True:
+        screen.blit(BG, BG_location)
+        #Get username 
+        #disp leaderboard
+        #back button
+        
+
+    
+def update_leaderboard(user_name, user_score):
+    leaderboard[user_name] = user_score
+    return dict(sorted(leaderboard.items(), key=lambda x:x[1],reverse=True))
+
+print (leaderboard)
 
 menu()
