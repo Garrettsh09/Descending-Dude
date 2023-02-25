@@ -352,6 +352,11 @@ def run_game():
                 if event.key == K_LEFT:
                     moving_left = False 
 
+        if player_location[0] < 0:
+            player_location[0] = 1400
+        if player_location[0] > 1400:
+            player_location[0] = 0
+
         if score == 7:
             level += 1
             score = 0
