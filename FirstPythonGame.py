@@ -9,8 +9,6 @@ import random
 #End screen
 #Ui
 #Music
-#Sound effects, collision and score increase
-#Scaling difficulty
 #Save score and high score
 #Leaderboard
 #Universal leaderboard
@@ -21,7 +19,7 @@ clock = pygame.time.Clock()
 pygame.init()
 mixer.init()
 
-pygame.display.set_caption('0')
+pygame.display.set_caption('Descending Dude')
 
 WINDOW_SIZE = (1400,1000)
 
@@ -69,14 +67,17 @@ def get_font(size):
 BG = pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Backgroundimage.png')
 BG_location = [0,0]
 
+DeathScreenBG = pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/DeathScreenBG.png')
+DeathScreenBG_location = [0,0]
+
 leaderboard = {'User1': 1, 'User2': 2, 'User3' : 3, 'User4' :4, 'User5': 5, 'User6': 6, 'User7': 7, 'User8': 8, 'User9': 9, 'User10': 10 }
 user_name = ''
 
 def menu():
     while True:
         screen.blit(BG, BG_location)
-        MENU_TEXT = get_font(100).render("MAIN MENU", True, "#ff6600")
-        MENU_RECT = MENU_TEXT.get_rect(center=(640, 100))
+        MENU_TEXT = get_font(80).render("Descending Dude", True, "#ff6600")
+        MENU_RECT = MENU_TEXT.get_rect(center=(700, 100))
 
         PLAYBUTTON_TEXT = get_font(100).render('PLAY', True, '#ff6600')
         PLAYBUTTON_RECT = PLAYBUTTON_TEXT.get_rect(center=(640,300))
@@ -105,6 +106,7 @@ def menu():
                 if LEADERBOARDBUTTON.checkForInput(pygame.mouse.get_pos()):
                     leaderboard_screen()
                 if MENUQUITBUTTON.checkForInput(pygame.mouse.get_pos()):
+                    #Sad sound?
                     quit_game()
             if event.type == QUIT:
                 quit_game()
@@ -113,6 +115,8 @@ def menu():
                     quit_game()
 
         pygame.display.update()
+
+
             
 player_image = pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/WorkerSprite3.png')
 beam_image = pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/BeamSprite.png')
@@ -190,6 +194,10 @@ def run_game():
     while True:
         screen.fill((146,244,255))
 
+        LIVESCORE_TEXT = get_font(50).render("SCORE:" + str(level), True, "#000000")
+        LIVESCORETEXT_RECT = LIVESCORE_TEXT.get_rect(center=(700, 50))  
+        screen.blit(LIVESCORE_TEXT,LIVESCORETEXT_RECT)
+
         screen.blit(player_image, player_location)
         screen.blit(beam_image, beam1_location)
         screen.blit(beam_image, beam2_location)
@@ -209,6 +217,14 @@ def run_game():
                 beam6_location[1] -= 10
                 beam7_location[1] -= 10
             elif 20 <= level < 50:
+                beam1_location[1] -= 12
+                beam2_location[1] -= 12
+                beam3_location[1] -= 12
+                beam4_location[1] -= 12
+                beam5_location[1] -= 12
+                beam6_location[1] -= 12
+                beam7_location[1] -= 12
+            elif 50 <= level < 100:
                 beam1_location[1] -= 15
                 beam2_location[1] -= 15
                 beam3_location[1] -= 15
@@ -216,7 +232,7 @@ def run_game():
                 beam5_location[1] -= 15
                 beam6_location[1] -= 15
                 beam7_location[1] -= 15
-            elif 50 <+ level < 100:
+            elif 100 <= level < 200:
                 beam1_location[1] -= 20
                 beam2_location[1] -= 20
                 beam3_location[1] -= 20
@@ -224,7 +240,7 @@ def run_game():
                 beam5_location[1] -= 20
                 beam6_location[1] -= 20
                 beam7_location[1] -= 20
-            elif 100 <= level < 200:
+            else:
                 beam1_location[1] -= 30
                 beam2_location[1] -= 30
                 beam3_location[1] -= 30
@@ -232,15 +248,6 @@ def run_game():
                 beam5_location[1] -= 30
                 beam6_location[1] -= 30
                 beam7_location[1] -= 30
-            else:
-                beam1_location[1] -= 100
-                beam2_location[1] -= 100
-                beam3_location[1] -= 100
-                beam4_location[1] -= 100
-                beam5_location[1] -= 100
-                beam6_location[1] -= 100
-                beam7_location[1] -= 100
-
 
         #make x value random by if randint > x: value = randint - x or if randint < x value = x - randint
         if player_location[1] < 300:
@@ -314,8 +321,7 @@ def run_game():
         if collision() == True:
             mixer.music.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Sound Effects/DeathSound.mp3')
             mixer.music.play()
-            break
-
+            break           
 
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -351,18 +357,50 @@ def run_game():
             else:
                 mixer.music.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Sound Effects/LevelSound.mp3')
                 mixer.music.play()
-            
-
+                    
         pygame.display.update()
         clock.tick(60)
+    
+    while True:
+        screen.blit(DeathScreenBG, DeathScreenBG_location)
 
+        DEATH_TEXT = get_font(150).render("You Died", True, "#ff0000")
+        DEATHTEXT_RECT = DEATH_TEXT.get_rect(center=(700, 100))
+
+        SCORE_TEXT = get_font(100).render('Score:' + str(level), True, '#ff6600')
+        SCORETEXT_RECT = SCORE_TEXT.get_rect(center=(640,300))
+
+        RETURNMAINMENU_TEXT = get_font(100).render('Main Menu', True, '#ff6600')
+        RETURNMAINMENUTEXT_RECT = RETURNMAINMENU_TEXT.get_rect(center=(640,500))
+        RETURNMAINMENUBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 500), 
+            text_input="Main Menu", font=get_font(75), base_color="#ff6600", hovering_color="White")
+
+        MENUQUIT_TEXT = get_font(100).render('QUIT', True, '#ff6600')
+        MENUQUIT_RECT = MENUQUIT_TEXT.get_rect(center=(640,700))
+        MENUQUITBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 700), 
+            text_input="QUIT", font=get_font(75), base_color="#ff6600", hovering_color="White")
+            
+        screen.blit(DEATH_TEXT, DEATHTEXT_RECT)
+        screen.blit(SCORE_TEXT,SCORETEXT_RECT)
+        screen.blit(RETURNMAINMENU_TEXT, RETURNMAINMENUTEXT_RECT)
+        screen.blit(MENUQUIT_TEXT, MENUQUIT_RECT)
         
-        pygame.display.set_caption(str(level))
-    leaderboard = update_leaderboard(user_name, level)
-    leaderboard.popitem()
-    return leaderboard
 
+        for event in pygame.event.get():
+            if event.type == MOUSEBUTTONUP:
+                if MENUQUITBUTTON.checkForInput(pygame.mouse.get_pos()):
+                    #Sad sound?
+                    quit_game()
+                if RETURNMAINMENUBUTTON.checkForInput(pygame.mouse.get_pos()):
+                    menu()
+            if event.type == QUIT:
+                quit_game()
+            if event.type == KEYUP:
+                if event.key == K_LALT and K_F4:
+                    quit_game()
 
+        pygame.display.update()
+    
 def leaderboard_screen():
     while True:
         screen.blit(BG, BG_location)
@@ -370,12 +408,8 @@ def leaderboard_screen():
         #disp leaderboard
         #back button
         
-
-    
 def update_leaderboard(user_name, user_score):
     leaderboard[user_name] = user_score
     return dict(sorted(leaderboard.items(), key=lambda x:x[1],reverse=True))
-
-print (leaderboard)
 
 menu()
