@@ -5,9 +5,7 @@ from pygame import mixer
 import random
 
 #To Do list:
-#Menu screen
-#End screen
-#Ui
+#Out of bands glitch
 #Music
 #Save score and high score
 #Leaderboard
@@ -79,24 +77,30 @@ def menu():
         MENU_TEXT = get_font(80).render("Descending Dude", True, "#ff6600")
         MENU_RECT = MENU_TEXT.get_rect(center=(700, 100))
 
-        PLAYBUTTON_TEXT = get_font(100).render('PLAY', True, '#ff6600')
-        PLAYBUTTON_RECT = PLAYBUTTON_TEXT.get_rect(center=(640,300))
-        PLAYBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 300), 
+        PLAYBUTTON_TEXT = get_font(90).render('PLAY', True, '#ff6600')
+        PLAYBUTTON_RECT = PLAYBUTTON_TEXT.get_rect(center=(640,275))
+        PLAYBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 275), 
             text_input="PLAY", font=get_font(75), base_color="#ff6600", hovering_color="White")
 
-        LEADERBOARD_TEXT = get_font(100).render('LEADERBOARD', True, '#ff6600')
-        LEADERBOARD_RECT = LEADERBOARD_TEXT.get_rect(center=(640,500))
-        LEADERBOARDBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 500), 
+        LEADERBOARD_TEXT = get_font(90).render('LEADERBOARD', True, '#ff6600')
+        LEADERBOARD_RECT = LEADERBOARD_TEXT.get_rect(center=(640,450))
+        LEADERBOARDBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 450), 
+            text_input="LEADERBOARD", font=get_font(75), base_color="#ff6600", hovering_color="White")
+        
+        SKINS_TEXT = get_font(90).render('SKINS', True, '#ff6600')
+        SKINSTEXT_RECT = SKINS_TEXT.get_rect(center=(640,650))
+        SKINSTEXTBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 650), 
             text_input="LEADERBOARD", font=get_font(75), base_color="#ff6600", hovering_color="White")
     
-        MENUQUIT_TEXT = get_font(100).render('QUIT', True, '#ff6600')
-        MENUQUIT_RECT = MENUQUIT_TEXT.get_rect(center=(640,700))
-        MENUQUITBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 700), 
+        MENUQUIT_TEXT = get_font(90).render('QUIT', True, '#ff6600')
+        MENUQUIT_RECT = MENUQUIT_TEXT.get_rect(center=(640,850))
+        MENUQUITBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 850), 
             text_input="QUIT", font=get_font(75), base_color="#ff6600", hovering_color="White")
         
         screen.blit(MENU_TEXT, MENU_RECT)
         screen.blit(PLAYBUTTON_TEXT, PLAYBUTTON_RECT)
         screen.blit(LEADERBOARD_TEXT, LEADERBOARD_RECT)
+        screen.blit(SKINS_TEXT, SKINSTEXT_RECT)
         screen.blit(MENUQUIT_TEXT,MENUQUIT_RECT)
 
         for event in pygame.event.get():
