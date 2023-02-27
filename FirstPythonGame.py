@@ -3,9 +3,9 @@ from pygame.locals import *
 import pygame_menu
 from pygame import mixer
 import random
+import csv
 
 #To Do list:
-#Out of bands glitch
 #Music
 #Save score and high score
 #Leaderboard
@@ -69,7 +69,7 @@ DeathScreenBG = pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/Fi
 DeathScreenBG_location = [0,0]
 
 leaderboard = {'User1': 1, 'User2': 2, 'User3' : 3, 'User4' :4, 'User5': 5, 'User6': 6, 'User7': 7, 'User8': 8, 'User9': 9, 'User10': 10 }
-user_name = ''
+user_name = 'Garrett'
 
 def menu():
     while True:
@@ -126,8 +126,6 @@ player_image = pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/Fir
 beam_image = pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/BeamSprite.png')
 
 player_location = [500,0]
-player_y_momentum = 0
-
 player_rect = pygame.Rect(player_location[0], player_location[1], player_image.get_width(),player_image.get_height())
 
 beam1_location = [(random.randint(0,1000)), (random.randint(400,1000))]
@@ -195,6 +193,14 @@ def run_game():
     level = 0
     moving_right = False
     moving_left = False
+    player_location[1] = 0
+    player_location[0] = 500
+    beam1_location[1] += 400
+    beam2_location[1] += 400
+    beam3_location[1] += 400
+    beam4_location[1] += 400
+    beam5_location[1] += 400
+    beam7_location[1] += 400
     while True:
         screen.fill((146,244,255))
 
@@ -369,6 +375,11 @@ def run_game():
                     
         pygame.display.update()
         clock.tick(60)
+
+    with open('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Leaderboard/Userscores.csv', 'w', newline='') as file:
+        writer = csv.writer(file)
+
+        writer.writerow([user_name, level])
     
     while True:
         screen.blit(DeathScreenBG, DeathScreenBG_location)
@@ -413,12 +424,10 @@ def run_game():
 def leaderboard_screen():
     while True:
         screen.blit(BG, BG_location)
+        pygame.display.update()
         #Get username 
         #disp leaderboard
         #back button
         
-def update_leaderboard(user_name, user_score):
-    leaderboard[user_name] = user_score
-    return dict(sorted(leaderboard.items(), key=lambda x:x[1],reverse=True))
 
 menu()
