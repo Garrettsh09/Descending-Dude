@@ -68,8 +68,7 @@ BG_location = [0,0]
 DeathScreenBG = pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/DeathScreenBG.png')
 DeathScreenBG_location = [0,0]
 
-leaderboard = {'User1': 1, 'User2': 2, 'User3' : 3, 'User4' :4, 'User5': 5, 'User6': 6, 'User7': 7, 'User8': 8, 'User9': 9, 'User10': 10 }
-user_name = 'Garrett'
+username = 'User'
 
 def menu():
     while True:
@@ -78,29 +77,23 @@ def menu():
         MENU_RECT = MENU_TEXT.get_rect(center=(700, 100))
 
         PLAYBUTTON_TEXT = get_font(90).render('PLAY', True, '#ff6600')
-        PLAYBUTTON_RECT = PLAYBUTTON_TEXT.get_rect(center=(640,275))
-        PLAYBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 275), 
+        PLAYBUTTON_RECT = PLAYBUTTON_TEXT.get_rect(center=(640,300))
+        PLAYBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 300), 
             text_input="PLAY", font=get_font(75), base_color="#ff6600", hovering_color="White")
 
         LEADERBOARD_TEXT = get_font(90).render('LEADERBOARD', True, '#ff6600')
-        LEADERBOARD_RECT = LEADERBOARD_TEXT.get_rect(center=(640,450))
-        LEADERBOARDBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 450), 
+        LEADERBOARD_RECT = LEADERBOARD_TEXT.get_rect(center=(640,500))
+        LEADERBOARDBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 500), 
             text_input="LEADERBOARD", font=get_font(75), base_color="#ff6600", hovering_color="White")
         
-        SKINS_TEXT = get_font(90).render('SKINS', True, '#ff6600')
-        SKINSTEXT_RECT = SKINS_TEXT.get_rect(center=(640,650))
-        SKINSTEXTBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 650), 
-            text_input="LEADERBOARD", font=get_font(75), base_color="#ff6600", hovering_color="White")
-    
         MENUQUIT_TEXT = get_font(90).render('QUIT', True, '#ff6600')
-        MENUQUIT_RECT = MENUQUIT_TEXT.get_rect(center=(640,850))
-        MENUQUITBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 850), 
+        MENUQUIT_RECT = MENUQUIT_TEXT.get_rect(center=(640,700))
+        MENUQUITBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 700), 
             text_input="QUIT", font=get_font(75), base_color="#ff6600", hovering_color="White")
         
         screen.blit(MENU_TEXT, MENU_RECT)
         screen.blit(PLAYBUTTON_TEXT, PLAYBUTTON_RECT)
         screen.blit(LEADERBOARD_TEXT, LEADERBOARD_RECT)
-        screen.blit(SKINS_TEXT, SKINSTEXT_RECT)
         screen.blit(MENUQUIT_TEXT,MENUQUIT_RECT)
 
         for event in pygame.event.get():
@@ -200,6 +193,7 @@ def run_game():
     beam3_location[1] += 400
     beam4_location[1] += 400
     beam5_location[1] += 400
+    beam6_location[1] += 400
     beam7_location[1] += 400
     while True:
         screen.fill((146,244,255))
@@ -376,10 +370,10 @@ def run_game():
         pygame.display.update()
         clock.tick(60)
 
-    with open('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Leaderboard/Userscores.csv', 'w', newline='') as file:
+    with open('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Leaderboard/Userscores.csv', 'a', newline='') as file:
         writer = csv.writer(file)
 
-        writer.writerow([user_name, level])
+        writer.writerow([username, level])
     
     while True:
         screen.blit(DeathScreenBG, DeathScreenBG_location)
@@ -422,12 +416,43 @@ def run_game():
         pygame.display.update()
     
 def leaderboard_screen():
+    global username
     while True:
         screen.blit(BG, BG_location)
-        pygame.display.update()
-        #Get username 
-        #disp leaderboard
-        #back button
+        text_screen = get_font(80).render('Username:',True,(255, 102, 0))
+        user_text = get_font(80).render(username,True,(225,102, 0))
+        input_rect = pygame.Rect(750,40,600,96)
+        pygame.draw.rect(screen, (0, 0, 0), input_rect,2)
+        inputrect_button = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(750, 50), 
+            text_input="Main Menu", font=get_font(75), base_color="#ff6600", hovering_color="White")
+
+
+        RETURNMAINMENU_TEXT = get_font(80).render('Main Menu', True, '#ff6600')
+        RETURNMAINMENUTEXT_RECT = RETURNMAINMENU_TEXT.get_rect(center=(700,800))
+        RETURNMAINMENUBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(700,800), 
+            text_input="Main Menu", font=get_font(75), base_color="#ff6600", hovering_color="White")
         
+        screen.blit(text_screen, (50, 50))
+        screen.blit(user_text,(750,50))
+        screen.blit(RETURNMAINMENU_TEXT, RETURNMAINMENUTEXT_RECT)
+
+        pygame.display.update()
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == MOUSEBUTTONUP:
+                if RETURNMAINMENUBUTTON.checkForInput(pygame.mouse.get_pos()):
+                    menu()
+                if inputrect_button.checkForInput(pygame.mouse.get_pos()):
+                    active = True
+                else:
+                    active = False 
+            if event.type == KEYDOWN:
+                if event.key == pygame.K_BACKSPACE:
+                    username = username[:-1]
+                else:
+                    username += event.unicode
 
 menu()
