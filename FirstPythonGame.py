@@ -421,7 +421,7 @@ def leaderboard_screen():
         screen.blit(BG, BG_location)
         text_screen = get_font(80).render('Username:',True,(255, 102, 0))
         user_text = get_font(80).render(username,True,(225,102, 0))
-        input_rect = pygame.Rect(750,40,600,96)
+        input_rect = pygame.Rect(740,40,650,96)
         pygame.draw.rect(screen, (0, 0, 0), input_rect,2)
         inputrect_button = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(750, 50), 
             text_input="Main Menu", font=get_font(75), base_color="#ff6600", hovering_color="White")
