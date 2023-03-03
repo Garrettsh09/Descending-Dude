@@ -145,19 +145,19 @@ beam7_location = [(random.randint(0,1000)), (random.randint(400,1000))]
 beam7_rect = pygame.Rect(beam7_location[0], beam7_location[1], beam_image.get_width(), beam_image.get_height())
 
 def collision():
-    if player_location[0] in range((beam1_location[0])- 75, (beam1_location[0])+75) and player_location[1] in range((beam1_location[1])-5, (beam1_location[1]) + 5):
+    if player_location[0] in range((beam1_location[0])- 75, (beam1_location[0])+75) and player_location[1] in range((beam1_location[1])-30, (beam1_location[1]) + 30):
         return True
-    if player_location[0] in range((beam2_location[0])- 75, (beam2_location[0])+75) and player_location[1] in range((beam2_location[1])-5, (beam2_location[1]) + 5):
+    if player_location[0] in range((beam2_location[0])- 75, (beam2_location[0])+75) and player_location[1] in range((beam2_location[1])-30, (beam2_location[1]) + 30):
         return True
-    if player_location[0] in range((beam3_location[0])- 75, (beam3_location[0])+75) and player_location[1] in range((beam3_location[1])-5, (beam3_location[1]) + 5):
+    if player_location[0] in range((beam3_location[0])- 75, (beam3_location[0])+75) and player_location[1] in range((beam3_location[1])-30, (beam3_location[1]) + 30):
         return True
-    if player_location[0] in range((beam4_location[0])- 75, (beam4_location[0])+75) and player_location[1] in range((beam4_location[1])-5, (beam4_location[1]) + 5):
+    if player_location[0] in range((beam4_location[0])- 75, (beam4_location[0])+75) and player_location[1] in range((beam4_location[1])-30, (beam4_location[1]) + 30):
         return True
-    if player_location[0] in range((beam5_location[0])- 75, (beam5_location[0])+75) and player_location[1] in range((beam5_location[1])-5, (beam5_location[1]) + 5):
+    if player_location[0] in range((beam5_location[0])- 75, (beam5_location[0])+75) and player_location[1] in range((beam5_location[1])-30, (beam5_location[1]) + 30):
         return True
-    if player_location[0] in range((beam6_location[0])- 75, (beam6_location[0])+75) and player_location[1] in range((beam6_location[1])-5, (beam6_location[1]) + 5):
+    if player_location[0] in range((beam6_location[0])- 75, (beam6_location[0])+75) and player_location[1] in range((beam6_location[1])-30, (beam6_location[1]) + 30):
         return True
-    if player_location[0] in range((beam7_location[0])- 75, (beam7_location[0])+75) and player_location[1] in range((beam7_location[1])-5, (beam7_location[1]) + 5):
+    if player_location[0] in range((beam7_location[0])- 75, (beam7_location[0])+75) and player_location[1] in range((beam7_location[1])-30, (beam7_location[1]) + 30):
         return True
 
 def score_(score, level):
