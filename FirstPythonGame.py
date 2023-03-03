@@ -4,13 +4,7 @@ import pygame_menu
 from pygame import mixer
 import random
 import csv
-
-#To Do list:
-#Music
-#Save score and high score
-#Leaderboard
-#Universal leaderboard
-#Changeable skins
+import pandas as pd
 
 clock = pygame.time.Clock()
 
@@ -38,6 +32,7 @@ class Button():
 		self.base_color, self.hovering_color = base_color, hovering_color
 		self.text_input = text_input
 		self.text = self.font.render(self.text_input, True, self.base_color)
+                
 		if self.image is None:
 			self.image = self.text
 		self.rect = self.image.get_rect(center=(self.x_pos, self.y_pos))
@@ -71,6 +66,8 @@ DeathScreenBG_location = [0,0]
 username = 'User'
 
 def menu():
+    mixer.music.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Music/GameSong.mp3')
+    mixer.music.play()
     while True:
         screen.blit(BG, BG_location)
         MENU_TEXT = get_font(80).render("Descending Dude", True, "#ff6600")
@@ -113,8 +110,19 @@ def menu():
 
         pygame.display.update()
 
+def get_leaderboard():
+    dataFrame = pd.read_csv('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Leaderboard/Userscores.csv')
+    dataFrame.sort_values('ScoresMe', axis = 0, ascending=False, inplace=True, na_position ='first')
+    
+    dataFrame['ScoresMe'] = dataFrame.apply(lambda row: (row['User'], row['ScoresMe']), axis=1)
 
-            
+    sorted_list = []
+    for i in range(len(dataFrame)):
+        sorted_list.append((dataFrame['ScoresMe'])[i])
+    
+    sorted_list.sort(key = lambda x: x[1], reverse=True)
+    return (sorted_list)
+
 player_image = pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/WorkerSprite3.png')
 beam_image = pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/BeamSprite.png')
 
@@ -195,6 +203,7 @@ def run_game():
     beam5_location[1] += 400
     beam6_location[1] += 400
     beam7_location[1] += 400
+    pygame.mixer.music.unload()
     while True:
         screen.fill((146,244,255))
 
@@ -265,6 +274,7 @@ def run_game():
                 beam1_location[0] -= x
             else:
                 beam1_location[0] += x
+
         if beam2_location[1] < 1:
             score += 1
             beam2_location[1] += 1000
@@ -273,6 +283,7 @@ def run_game():
                 beam2_location[0] -= x
             else:
                 beam2_location[0] += x
+
         if beam3_location[1] < 1:
             score += 1
             beam3_location[1] += 1000
@@ -281,6 +292,7 @@ def run_game():
                 beam3_location[0] -= x
             else:
                 beam3_location[0] += x
+
         if beam4_location[1] < 1:
             score += 1
             beam4_location[1] += 1000
@@ -289,6 +301,7 @@ def run_game():
                 beam4_location[0] -= x
             else:
                 beam4_location[0] += x
+
         if beam5_location[1] < 1:
             score += 1
             beam5_location[1] += 1000
@@ -297,6 +310,7 @@ def run_game():
                 beam5_location[0] -= x
             else:
                 beam5_location[0] += x
+
         if beam6_location[1] < 1:
             score += 1
             beam6_location[1] += 1000
@@ -305,6 +319,7 @@ def run_game():
                 beam6_location[0] -= x
             else:
                 beam6_location[0] += x
+
         if beam7_location[1] < 1:
             score += 1
             beam7_location[1] += 1000
@@ -325,7 +340,8 @@ def run_game():
         if collision() == True:
             mixer.music.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Sound Effects/DeathSound.mp3')
             mixer.music.play()
-            break           
+            break
+                       
 
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -374,6 +390,7 @@ def run_game():
         writer = csv.writer(file)
 
         writer.writerow([username, level])
+
     
     while True:
         screen.blit(DeathScreenBG, DeathScreenBG_location)
@@ -426,15 +443,40 @@ def leaderboard_screen():
         inputrect_button = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(750, 50), 
             text_input="Main Menu", font=get_font(75), base_color="#ff6600", hovering_color="White")
 
-
         RETURNMAINMENU_TEXT = get_font(80).render('Main Menu', True, '#ff6600')
         RETURNMAINMENUTEXT_RECT = RETURNMAINMENU_TEXT.get_rect(center=(700,800))
         RETURNMAINMENUBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(700,800), 
             text_input="Main Menu", font=get_font(75), base_color="#ff6600", hovering_color="White")
+
+        if len(get_leaderboard()) > 0:
+            FirstScoreText = get_font(80).render('1.' + str(((get_leaderboard())[0])[0]) + ':' + str(((get_leaderboard())[0])[1]),True,(255, 102, 0))
+        else:
+            FirstScoreText = get_font(80).render('1.N/A',True,(255, 102, 0))
+        if len(get_leaderboard()) > 1:
+            SecondScoreText = get_font(80).render('2.' + str(((get_leaderboard())[1])[0]) + ':' + str(((get_leaderboard())[1])[1]),True,(255, 102, 0))
+        else:
+            SecondScoreText = get_font(80).render('2.N/A',True,(255, 102, 0))
+        if len(get_leaderboard()) > 2:
+            ThirdScoreText = get_font(80).render('3.' + str(((get_leaderboard())[2])[0]) + ':' + str(((get_leaderboard())[2])[1]),True,(255, 102, 0))
+        else:
+            ThirdScoreText = get_font(80).render('3.N/A',True,(255, 102, 0))
+        if len(get_leaderboard()) > 3:
+            FourthScoreText = get_font(80).render('4.' + str(((get_leaderboard())[3])[0]) + ':' + str(((get_leaderboard())[3])[1]),True,(255, 102, 0))
+        else:
+            FourthScoreText = get_font(80).render('4.N/A',True,(255, 102, 0))
+        if len(get_leaderboard()) > 4:
+            FifthScoreText = get_font(80).render('5.' + str(((get_leaderboard())[4])[0]) + ':' + str(((get_leaderboard())[4])[1]),True,(255, 102, 0))
+        else:
+            FifthScoreText = get_font(80).render('5.N/A',True,(255, 102, 0))
         
         screen.blit(text_screen, (50, 50))
         screen.blit(user_text,(750,50))
         screen.blit(RETURNMAINMENU_TEXT, RETURNMAINMENUTEXT_RECT)
+        screen.blit(FirstScoreText, (200, 200))
+        screen.blit(SecondScoreText, (200, 300))
+        screen.blit(ThirdScoreText, (200,400))
+        screen.blit(FourthScoreText, (200,500))
+        screen.blit(FifthScoreText, (200,600))
 
         pygame.display.update()
         
