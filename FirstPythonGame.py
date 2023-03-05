@@ -100,7 +100,6 @@ def menu():
                 if LEADERBOARDBUTTON.checkForInput(pygame.mouse.get_pos()):
                     leaderboard_screen()
                 if MENUQUITBUTTON.checkForInput(pygame.mouse.get_pos()):
-                    #Sad sound?
                     quit_game()
             if event.type == QUIT:
                 quit_game()
@@ -204,6 +203,7 @@ def run_game():
     beam6_location[1] += 400
     beam7_location[1] += 400
     pygame.mixer.music.unload()
+    
     while True:
         screen.fill((146,244,255))
 
@@ -262,7 +262,6 @@ def run_game():
                 beam6_location[1] -= 30
                 beam7_location[1] -= 30
 
-        #make x value random by if randint > x: value = randint - x or if randint < x value = x - randint
         if player_location[1] < 300:
             player_location[1] += 5
 
@@ -347,6 +346,7 @@ def run_game():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
+
             if event.type == KEYDOWN:
                 if event.key == K_LALT and K_F4:
                     pygame.quit()
@@ -420,7 +420,6 @@ def run_game():
         for event in pygame.event.get():
             if event.type == MOUSEBUTTONUP:
                 if MENUQUITBUTTON.checkForInput(pygame.mouse.get_pos()):
-                    #Sad sound?
                     quit_game()
                 if RETURNMAINMENUBUTTON.checkForInput(pygame.mouse.get_pos()):
                     menu()
@@ -434,6 +433,7 @@ def run_game():
     
 def leaderboard_screen():
     global username
+
     while True:
         screen.blit(BG, BG_location)
         text_screen = get_font(80).render('Username:',True,(255, 102, 0))
