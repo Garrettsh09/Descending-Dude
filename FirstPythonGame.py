@@ -5,6 +5,7 @@ from pygame import mixer
 import random
 import csv
 import pandas as pd
+from pathlib import Path
 
 clock = pygame.time.Clock()
 
@@ -18,6 +19,14 @@ WINDOW_SIZE = (1400,1000)
 screen = pygame.display.set_mode(WINDOW_SIZE,0,32)
 
 mixer.music.set_volume(0.2)
+
+from pathlib import Path
+
+ROOT_DIR = Path(__file__).parent
+Art_DIR = ROOT_DIR / "Art"
+Leaderboard_DIR = ROOT_DIR / "Leaderboard"
+Music_DIR = ROOT_DIR / "Music"
+SoundEffects_DIR = ROOT_DIR / "SoundEffects"
 
 def quit_game():
     pygame.quit()
@@ -55,18 +64,18 @@ class Button():
 			self.text = self.font.render(self.text_input, True, self.base_color)
 
 def get_font(size):
-    return pygame.font.Font('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/font.ttf', size)
+    return pygame.font.Font(Art_DIR/'font.ttf', size)
 
-BG = pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Backgroundimage.png')
+BG = pygame.image.load(Art_DIR/'Backgroundimage.png')
 BG_location = [0,0]
 
-DeathScreenBG = pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/DeathScreenBG.png')
+DeathScreenBG = pygame.image.load(Art_DIR/'DeathScreenBG.png')
 DeathScreenBG_location = [0,0]
 
 username = 'User'
 
 def menu():
-    mixer.music.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Music/GameSong.mp3')
+    mixer.music.load(Music_DIR/'GameSong.mp3')
     mixer.music.play()
     while True:
         screen.blit(BG, BG_location)
@@ -75,17 +84,17 @@ def menu():
 
         PLAYBUTTON_TEXT = get_font(90).render('PLAY', True, '#ff6600')
         PLAYBUTTON_RECT = PLAYBUTTON_TEXT.get_rect(center=(640,300))
-        PLAYBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 300), 
+        PLAYBUTTON = Button(image=pygame.image.load(Art_DIR/'Play_Rect.png'), pos=(640, 300), 
             text_input="PLAY", font=get_font(75), base_color="#ff6600", hovering_color="White")
 
         LEADERBOARD_TEXT = get_font(90).render('LEADERBOARD', True, '#ff6600')
         LEADERBOARD_RECT = LEADERBOARD_TEXT.get_rect(center=(640,500))
-        LEADERBOARDBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 500), 
+        LEADERBOARDBUTTON = Button(image=pygame.image.load(Art_DIR/'Play_Rect.png'), pos=(640, 500), 
             text_input="LEADERBOARD", font=get_font(75), base_color="#ff6600", hovering_color="White")
         
         MENUQUIT_TEXT = get_font(90).render('QUIT', True, '#ff6600')
         MENUQUIT_RECT = MENUQUIT_TEXT.get_rect(center=(640,700))
-        MENUQUITBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 700), 
+        MENUQUITBUTTON = Button(image=pygame.image.load(Art_DIR/'Play_Rect.png'), pos=(640, 700), 
             text_input="QUIT", font=get_font(75), base_color="#ff6600", hovering_color="White")
         
         screen.blit(MENU_TEXT, MENU_RECT)
@@ -110,7 +119,7 @@ def menu():
         pygame.display.update()
 
 def get_leaderboard():
-    dataFrame = pd.read_csv('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Leaderboard/Userscores.csv')
+    dataFrame = pd.read_csv(Leaderboard_DIR/'Userscores.csv')
     dataFrame.sort_values('ScoresMe', axis = 0, ascending=False, inplace=True, na_position ='first')
     
     dataFrame['ScoresMe'] = dataFrame.apply(lambda row: (row['User'], row['ScoresMe']), axis=1)
@@ -122,8 +131,8 @@ def get_leaderboard():
     sorted_list.sort(key = lambda x: x[1], reverse=True)
     return (sorted_list)
 
-player_image = pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/WorkerSprite3.png')
-beam_image = pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/BeamSprite.png')
+player_image = pygame.image.load(Art_DIR/'WorkerSprite3.png')
+beam_image = pygame.image.load(Art_DIR/'BeamSprite.png')
 
 player_location = [500,0]
 player_rect = pygame.Rect(player_location[0], player_location[1], player_image.get_width(),player_image.get_height())
@@ -203,7 +212,7 @@ def run_game():
     beam6_location[1] += 400
     beam7_location[1] += 400
     pygame.mixer.music.unload()
-    
+
     while True:
         screen.fill((146,244,255))
 
@@ -337,7 +346,7 @@ def run_game():
         player_rect.y = player_location[1]
 
         if collision() == True:
-            mixer.music.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Sound Effects/DeathSound.mp3')
+            mixer.music.load(SoundEffects_DIR/'DeathSound.mp3')
             mixer.music.play()
             break
                        
@@ -377,16 +386,16 @@ def run_game():
             level += 1
             score = 0
             if level % 10 == 0:
-                mixer.music.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Sound Effects/Level10Sound.mp3')
+                mixer.music.load(SoundEffects_DIR/'Level10Sound.mp3')
                 mixer.music.play()
             else:
-                mixer.music.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Sound Effects/LevelSound.mp3')
+                mixer.music.load(SoundEffects_DIR/'LevelSound.mp3')
                 mixer.music.play()
                     
         pygame.display.update()
         clock.tick(60)
 
-    with open('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Leaderboard/Userscores.csv', 'a', newline='') as file:
+    with open(Leaderboard_DIR/'Userscores.csv', 'a', newline='') as file:
         writer = csv.writer(file)
 
         writer.writerow([username, level])
@@ -403,12 +412,12 @@ def run_game():
 
         RETURNMAINMENU_TEXT = get_font(100).render('Main Menu', True, '#ff6600')
         RETURNMAINMENUTEXT_RECT = RETURNMAINMENU_TEXT.get_rect(center=(640,500))
-        RETURNMAINMENUBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 500), 
+        RETURNMAINMENUBUTTON = Button(image=pygame.image.load(Art_DIR/'Play_Rect.png'), pos=(640, 500), 
             text_input="Main Menu", font=get_font(75), base_color="#ff6600", hovering_color="White")
 
         MENUQUIT_TEXT = get_font(100).render('QUIT', True, '#ff6600')
         MENUQUIT_RECT = MENUQUIT_TEXT.get_rect(center=(640,700))
-        MENUQUITBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(640, 700), 
+        MENUQUITBUTTON = Button(image=pygame.image.load(Art_DIR/'Play_Rect.png'), pos=(640, 700), 
             text_input="QUIT", font=get_font(75), base_color="#ff6600", hovering_color="White")
             
         screen.blit(DEATH_TEXT, DEATHTEXT_RECT)
@@ -440,12 +449,12 @@ def leaderboard_screen():
         user_text = get_font(80).render(username,True,(225,102, 0))
         input_rect = pygame.Rect(740,40,650,96)
         pygame.draw.rect(screen, (0, 0, 0), input_rect,2)
-        inputrect_button = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(750, 50), 
+        inputrect_button = Button(image=pygame.image.load(Art_DIR/'Play_Rect.png'), pos=(750, 50), 
             text_input="Main Menu", font=get_font(75), base_color="#ff6600", hovering_color="White")
 
         RETURNMAINMENU_TEXT = get_font(80).render('Main Menu', True, '#ff6600')
         RETURNMAINMENUTEXT_RECT = RETURNMAINMENU_TEXT.get_rect(center=(700,800))
-        RETURNMAINMENUBUTTON = Button(image=pygame.image.load('/Users/garrettsharpe/Documents/Code/Github/First-Python-Game/Art/Play_Rect.png'), pos=(700,800), 
+        RETURNMAINMENUBUTTON = Button(image=pygame.image.load(Art_DIR/'Play_Rect.png'), pos=(700,800), 
             text_input="Main Menu", font=get_font(75), base_color="#ff6600", hovering_color="White")
 
         if len(get_leaderboard()) > 0:
