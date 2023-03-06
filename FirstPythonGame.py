@@ -20,8 +20,6 @@ screen = pygame.display.set_mode(WINDOW_SIZE,0,32)
 
 mixer.music.set_volume(0.2)
 
-from pathlib import Path
-
 ROOT_DIR = Path(__file__).parent
 Art_DIR = ROOT_DIR / "Art"
 Leaderboard_DIR = ROOT_DIR / "Leaderboard"
