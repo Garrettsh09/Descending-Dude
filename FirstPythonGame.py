@@ -564,19 +564,14 @@ def skins_menu():
                 if RETURNMAINMENUBUTTON.checkForInput(pygame.mouse.get_pos()):
                     menu()
                 if ASTRONAUTBUTTON.checkForInput(pygame.mouse.get_pos()):
-                    print (1)
                     player_image = AstronautSprite
                 if ZOMBIEBUTTON.checkForInput(pygame.mouse.get_pos()):
-                    print (2)
                     player_image = ZombieSprite
                 if WORKERBUTTON.checkForInput(pygame.mouse.get_pos()):
-                    print(3)
                     player_image = WorkerSprite
                 if SAAKUBUTTON.checkForInput(pygame.mouse.get_pos()):
-                    print (4)
                     player_image = SaakuSprite
                 if NINJABUTTON.checkForInput(pygame.mouse.get_pos()):
-                    print (5)
                     player_image = NinjaSprite        
 
 menu()
