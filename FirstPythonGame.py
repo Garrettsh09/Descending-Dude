@@ -81,23 +81,29 @@ def menu():
         MENU_RECT = MENU_TEXT.get_rect(center=(700, 100))
 
         PLAYBUTTON_TEXT = get_font(90).render('PLAY', True, '#ff6600')
-        PLAYBUTTON_RECT = PLAYBUTTON_TEXT.get_rect(center=(640,300))
-        PLAYBUTTON = Button(image=pygame.image.load(Art_DIR/'Play_Rect.png'), pos=(640, 300), 
+        PLAYBUTTON_RECT = PLAYBUTTON_TEXT.get_rect(center=(640,275))
+        PLAYBUTTON = Button(image=pygame.image.load(Art_DIR/'Play_Rect.png'), pos=(640, 275), 
             text_input="PLAY", font=get_font(75), base_color="#ff6600", hovering_color="White")
 
         LEADERBOARD_TEXT = get_font(90).render('LEADERBOARD', True, '#ff6600')
-        LEADERBOARD_RECT = LEADERBOARD_TEXT.get_rect(center=(640,500))
-        LEADERBOARDBUTTON = Button(image=pygame.image.load(Art_DIR/'Play_Rect.png'), pos=(640, 500), 
+        LEADERBOARD_RECT = LEADERBOARD_TEXT.get_rect(center=(640,450))
+        LEADERBOARDBUTTON = Button(image=pygame.image.load(Art_DIR/'Play_Rect.png'), pos=(640, 450), 
             text_input="LEADERBOARD", font=get_font(75), base_color="#ff6600", hovering_color="White")
         
+        SKINSMENU_TEXT = get_font(90).render('SKINS', True, '#ff6600')
+        SKINSMENU_RECT = SKINSMENU_TEXT.get_rect(center=(640,650))
+        SKINSMENUBUTTON = Button(image=pygame.image.load(Art_DIR/'Play_Rect.png'), pos=(640, 650), 
+            text_input="SKINS", font=get_font(75), base_color="#ff6600", hovering_color="White")
+        
         MENUQUIT_TEXT = get_font(90).render('QUIT', True, '#ff6600')
-        MENUQUIT_RECT = MENUQUIT_TEXT.get_rect(center=(640,700))
-        MENUQUITBUTTON = Button(image=pygame.image.load(Art_DIR/'Play_Rect.png'), pos=(640, 700), 
+        MENUQUIT_RECT = MENUQUIT_TEXT.get_rect(center=(640,825))
+        MENUQUITBUTTON = Button(image=pygame.image.load(Art_DIR/'Play_Rect.png'), pos=(640, 825), 
             text_input="QUIT", font=get_font(75), base_color="#ff6600", hovering_color="White")
         
         screen.blit(MENU_TEXT, MENU_RECT)
         screen.blit(PLAYBUTTON_TEXT, PLAYBUTTON_RECT)
         screen.blit(LEADERBOARD_TEXT, LEADERBOARD_RECT)
+        screen.blit(SKINSMENU_TEXT, SKINSMENU_RECT)
         screen.blit(MENUQUIT_TEXT,MENUQUIT_RECT)
 
         for event in pygame.event.get():
@@ -106,6 +112,8 @@ def menu():
                     run_game()
                 if LEADERBOARDBUTTON.checkForInput(pygame.mouse.get_pos()):
                     leaderboard_screen()
+                if SKINSMENUBUTTON.checkForInput(pygame.mouse.get_pos()):
+                    skins_menu()
                 if MENUQUITBUTTON.checkForInput(pygame.mouse.get_pos()):
                     quit_game()
             if event.type == QUIT:
@@ -129,8 +137,14 @@ def get_leaderboard():
     sorted_list.sort(key = lambda x: x[1], reverse=True)
     return (sorted_list)
 
-player_image = pygame.image.load(Art_DIR/'WorkerSprite3.png')
+WorkerSprite = pygame.image.load(Art_DIR/'WorkerSprite3.png')
+NinjaSprite = pygame.image.load(Art_DIR/'NinjaSprite.png')
+ZombieSprite = pygame.image.load(Art_DIR/'ZombieSprite.png')
+AstronautSprite = pygame.image.load(Art_DIR/'AstronautSprite.png')
+SaakuSprite = pygame.image.load(Art_DIR/'SaakuSprite.png')
 beam_image = pygame.image.load(Art_DIR/'BeamSprite.png')
+
+player_image = ZombieSprite
 
 player_location = [500,0]
 player_rect = pygame.Rect(player_location[0], player_location[1], player_image.get_width(),player_image.get_height())
@@ -245,13 +259,13 @@ def run_game():
                 beam6_location[1] -= 12
                 beam7_location[1] -= 12
             elif 50 <= level < 100:
-                beam1_location[1] -= 15
-                beam2_location[1] -= 15
-                beam3_location[1] -= 15
-                beam4_location[1] -= 15
-                beam5_location[1] -= 15
-                beam6_location[1] -= 15
-                beam7_location[1] -= 15
+                beam1_location[1] -= 14
+                beam2_location[1] -= 14
+                beam3_location[1] -= 14
+                beam4_location[1] -= 14
+                beam5_location[1] -= 14
+                beam6_location[1] -= 14
+                beam7_location[1] -= 14
             elif 100 <= level < 200:
                 beam1_location[1] -= 20
                 beam2_location[1] -= 20
@@ -440,7 +454,6 @@ def run_game():
     
 def leaderboard_screen():
     global username
-
     while True:
         screen.blit(BG, BG_location)
         text_screen = get_font(80).render('Username:',True,(255, 102, 0))
@@ -503,5 +516,67 @@ def leaderboard_screen():
                     username = username[:-1]
                 else:
                     username += event.unicode
+                if len(username) > 8:
+                    username = username[:-1]
+
+def skins_menu():
+    global player_image
+    while True:
+        AstronautSized = pygame.image.load(Art_DIR/'AstronautSpriteSized.png')
+        ZombieSized = pygame.image.load(Art_DIR/'ZombieSpriteSized.png')
+        WorkerSized = pygame.image.load(Art_DIR/'WorkerSpriteSized.png')
+        SaakuSized = pygame.image.load(Art_DIR/'SaakuSpriteSized.png')
+        NinjaSized = pygame.image.load(Art_DIR/'NinjaSpriteSized.png')
+        mixer.music.load(Music_DIR/'GameSong.mp3')
+        mixer.music.play()
+        screen.blit(BG, BG_location)
+        RETURNMAINMENU_TEXT = get_font(80).render('Main Menu', True, '#ff6600')
+        RETURNMAINMENUTEXT_RECT = RETURNMAINMENU_TEXT.get_rect(center=(700,800))
+        RETURNMAINMENUBUTTON = Button(image=pygame.image.load(Art_DIR/'Play_Rect.png'), pos=(700,800), 
+            text_input="Main Menu", font=get_font(75), base_color="#ff6600", hovering_color="White")
+        ASTRONAUTBUTTON = Button(image=pygame.image.load(Art_DIR/'Play_Rect.png'), pos=(150,450), 
+            text_input="", font=get_font(75), base_color="#ff6600", hovering_color="White")
+        ZOMBIEBUTTON = Button(image=pygame.image.load(Art_DIR/'Play_Rect.png'), pos=(350,450), 
+            text_input="", font=get_font(75), base_color="#ff6600", hovering_color="White")
+        WORKERBUTTON = Button(image=pygame.image.load(Art_DIR/'Play_Rect.png'), pos=(650,450), 
+            text_input="", font=get_font(75), base_color="#ff6600", hovering_color="White")
+        SAAKUBUTTON = Button(image=pygame.image.load(Art_DIR/'Play_Rect.png'), pos=(950,450), 
+            text_input="", font=get_font(75), base_color="#ff6600", hovering_color="White")
+        NINJABUTTON = Button(image=pygame.image.load(Art_DIR/'Play_Rect.png'), pos=(1200,450), 
+            text_input="", font=get_font(75), base_color="#ff6600", hovering_color="White")
+        
+
+        screen.blit(RETURNMAINMENU_TEXT, RETURNMAINMENUTEXT_RECT)
+        screen.blit(AstronautSized, [50,300])
+        screen.blit(ZombieSized, [300,300])
+        screen.blit(WorkerSized, [600,300])
+        screen.blit(SaakuSized, [900,300])
+        screen.blit(NinjaSized, [1150, 300])
+
+
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == MOUSEBUTTONUP:
+                if RETURNMAINMENUBUTTON.checkForInput(pygame.mouse.get_pos()):
+                    menu()
+                if ASTRONAUTBUTTON.checkForInput(pygame.mouse.get_pos()):
+                    print (1)
+                    player_image = AstronautSprite
+                if ZOMBIEBUTTON.checkForInput(pygame.mouse.get_pos()):
+                    print (2)
+                    player_image = ZombieSprite
+                if WORKERBUTTON.checkForInput(pygame.mouse.get_pos()):
+                    print(3)
+                    player_image = WorkerSprite
+                if SAAKUBUTTON.checkForInput(pygame.mouse.get_pos()):
+                    print (4)
+                    player_image = SaakuSprite
+                if NINJABUTTON.checkForInput(pygame.mouse.get_pos()):
+                    print (5)
+                    player_image = NinjaSprite        
 
 menu()
