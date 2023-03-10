@@ -62,7 +62,7 @@ class Button():
 			self.text = self.font.render(self.text_input, True, self.base_color)
 
 def get_font(size):
-    return pygame.font.Font(Art_DIR/'font.ttf', size)
+    return pygame.font.Font(Art_DIR/'04B_30__.TTF', size)
 
 BG = pygame.image.load(Art_DIR/'Backgroundimage.png')
 BG_location = [0,0]
@@ -144,7 +144,7 @@ AstronautSprite = pygame.image.load(Art_DIR/'AstronautSprite.png')
 SaakuSprite = pygame.image.load(Art_DIR/'SaakuSprite.png')
 beam_image = pygame.image.load(Art_DIR/'BeamSprite.png')
 
-player_image = ZombieSprite
+player_image = WorkerSprite
 
 player_location = [500,0]
 player_rect = pygame.Rect(player_location[0], player_location[1], player_image.get_width(),player_image.get_height())
@@ -469,25 +469,25 @@ def leaderboard_screen():
             text_input="Main Menu", font=get_font(75), base_color="#ff6600", hovering_color="White")
 
         if len(get_leaderboard()) > 0:
-            FirstScoreText = get_font(80).render('1.' + str(((get_leaderboard())[0])[0]) + ':' + str(((get_leaderboard())[0])[1]),True,(255, 102, 0))
+            FirstScoreText = get_font(100).render('1.' + str(((get_leaderboard())[0])[0]) + ':' + str(((get_leaderboard())[0])[1]),True,(255, 102, 0))
         else:
-            FirstScoreText = get_font(80).render('1.N/A',True,(255, 102, 0))
+            FirstScoreText = get_font(100).render('1.N/A',True,(255, 102, 0))
         if len(get_leaderboard()) > 1:
-            SecondScoreText = get_font(80).render('2.' + str(((get_leaderboard())[1])[0]) + ':' + str(((get_leaderboard())[1])[1]),True,(255, 102, 0))
+            SecondScoreText = get_font(100).render('2.' + str(((get_leaderboard())[1])[0]) + ':' + str(((get_leaderboard())[1])[1]),True,(255, 102, 0))
         else:
-            SecondScoreText = get_font(80).render('2.N/A',True,(255, 102, 0))
+            SecondScoreText = get_font(100).render('2.N/A',True,(255, 102, 0))
         if len(get_leaderboard()) > 2:
-            ThirdScoreText = get_font(80).render('3.' + str(((get_leaderboard())[2])[0]) + ':' + str(((get_leaderboard())[2])[1]),True,(255, 102, 0))
+            ThirdScoreText = get_font(100).render('3.' + str(((get_leaderboard())[2])[0]) + ':' + str(((get_leaderboard())[2])[1]),True,(255, 102, 0))
         else:
-            ThirdScoreText = get_font(80).render('3.N/A',True,(255, 102, 0))
+            ThirdScoreText = get_font(100).render('3.N/A',True,(255, 102, 0))
         if len(get_leaderboard()) > 3:
-            FourthScoreText = get_font(80).render('4.' + str(((get_leaderboard())[3])[0]) + ':' + str(((get_leaderboard())[3])[1]),True,(255, 102, 0))
+            FourthScoreText = get_font(100).render('4.' + str(((get_leaderboard())[3])[0]) + ':' + str(((get_leaderboard())[3])[1]),True,(255, 102, 0))
         else:
-            FourthScoreText = get_font(80).render('4.N/A',True,(255, 102, 0))
+            FourthScoreText = get_font(100).render('4.N/A',True,(255, 102, 0))
         if len(get_leaderboard()) > 4:
-            FifthScoreText = get_font(80).render('5.' + str(((get_leaderboard())[4])[0]) + ':' + str(((get_leaderboard())[4])[1]),True,(255, 102, 0))
+            FifthScoreText = get_font(100).render('5.' + str(((get_leaderboard())[4])[0]) + ':' + str(((get_leaderboard())[4])[1]),True,(255, 102, 0))
         else:
-            FifthScoreText = get_font(80).render('5.N/A',True,(255, 102, 0))
+            FifthScoreText = get_font(100).render('5.N/A',True,(255, 102, 0))
         
         screen.blit(text_screen, (50, 50))
         screen.blit(user_text,(750,50))
@@ -516,7 +516,7 @@ def leaderboard_screen():
                     username = username[:-1]
                 else:
                     username += event.unicode
-                if len(username) > 8:
+                if len(username) > 9:
                     username = username[:-1]
 
 def skins_menu():
@@ -552,8 +552,18 @@ def skins_menu():
         screen.blit(WorkerSized, [600,300])
         screen.blit(SaakuSized, [900,300])
         screen.blit(NinjaSized, [1150, 300])
-
-
+        #Show what skin is chosen by glowing aura
+        if player_image == AstronautSprite:
+            screen.blit(pygame.image.load(Art_DIR/'Arrow.png'), [37,100])
+        elif player_image == ZombieSprite:
+            screen.blit(pygame.image.load(Art_DIR/'Arrow.png'), [287.5,100])
+        elif player_image == WorkerSprite:
+            screen.blit(pygame.image.load(Art_DIR/'Arrow.png'), [586.5,100])
+        elif player_image == SaakuSprite:
+            screen.blit(pygame.image.load(Art_DIR/'Arrow.png'), [887,100])
+        elif player_image == NinjaSprite:
+            screen.blit(pygame.image.load(Art_DIR/'Arrow.png'), [1138,100])
+            
         pygame.display.update()
 
         for event in pygame.event.get():
