@@ -464,8 +464,8 @@ def leaderboard_screen():
             text_input="Main Menu", font=get_font(75), base_color="#ff6600", hovering_color="White")
 
         RETURNMAINMENU_TEXT = get_font(80).render('Main Menu', True, '#ff6600')
-        RETURNMAINMENUTEXT_RECT = RETURNMAINMENU_TEXT.get_rect(center=(700,800))
-        RETURNMAINMENUBUTTON = Button(image=pygame.image.load(Art_DIR/'Play_Rect.png'), pos=(700,800), 
+        RETURNMAINMENUTEXT_RECT = RETURNMAINMENU_TEXT.get_rect(center=(640,850))
+        RETURNMAINMENUBUTTON = Button(image=pygame.image.load(Art_DIR/'Play_Rect.png'), pos=(640,850), 
             text_input="Main Menu", font=get_font(75), base_color="#ff6600", hovering_color="White")
 
         if len(get_leaderboard()) > 0:
@@ -493,10 +493,10 @@ def leaderboard_screen():
         screen.blit(user_text,(750,50))
         screen.blit(RETURNMAINMENU_TEXT, RETURNMAINMENUTEXT_RECT)
         screen.blit(FirstScoreText, (200, 200))
-        screen.blit(SecondScoreText, (200, 300))
-        screen.blit(ThirdScoreText, (200,400))
-        screen.blit(FourthScoreText, (200,500))
-        screen.blit(FifthScoreText, (200,600))
+        screen.blit(SecondScoreText, (200, 325))
+        screen.blit(ThirdScoreText, (200,450))
+        screen.blit(FourthScoreText, (200,575))
+        screen.blit(FifthScoreText, (200,700))
 
         pygame.display.update()
         
